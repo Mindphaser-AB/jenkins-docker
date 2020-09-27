@@ -25,6 +25,12 @@ build-slim:
 build-jdk11:
 	docker build --file 11/debian/buster/hotspot/Dockerfile .
 
+build-jdk11-armv7:
+	docker build --file 11/debian-armv7/buster/Dockerfile . -t ${DOCKER_TAG}
+
+push-jdk11-armv7:
+	docker push ${DOCKER_TAG}
+
 build-centos:
 	docker build --file 8/centos/centos8/hotspot/Dockerfile .
 
