@@ -3,6 +3,8 @@ ROOT_DIR="$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))/"
 all: shellcheck build test
 
 DOCKERFILES=$(shell find . -type f -not -path "./tests/*" -name Dockerfile)
+IMAGE_VERSION?=2.258
+IMAGE_TAG=synology:6000/jenkins:${IMAGE_VERSION}
 
 shellcheck:
 	$(ROOT_DIR)/tools/shellcheck -e SC1091 \
@@ -26,10 +28,10 @@ build-jdk11:
 	docker build --file 11/debian/buster/hotspot/Dockerfile .
 
 build-jdk11-armv7:
-	docker build --file 11/debian-armv7/buster/Dockerfile . -t ${DOCKER_TAG}
+	docker build --file 11/debian-armv7/buster/Dockerfile . -t ${IMAGE_TAG}
 
 push-jdk11-armv7:
-	docker push ${DOCKER_TAG}
+	docker push ${IMAGE_TAG}
 
 build-centos:
 	docker build --file 8/centos/centos8/hotspot/Dockerfile .
